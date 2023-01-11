@@ -26,7 +26,7 @@ from tianshou.utils.net.common import Net
 
 
 def get_env(render_mode: Optional[str] = None):
-    return PettingZooEnv(knights_archers_zombies_v10.env(num_archers = 2, num_knights = 2, max_arrows=1000, killable_knights=False, killable_archers=False, max_zombies=4, render_mode=render_mode))
+    return PettingZooEnv(knights_archers_zombies_v10.env(max_arrows=1000, killable_knights=False, killable_archers=False, max_zombies=4, render_mode=render_mode))
 
 
 def get_parser() -> argparse.ArgumentParser:
@@ -37,7 +37,7 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument('--buffer-size', type=int, default=20000)
     parser.add_argument('--lr', type=float, default=1e-4)
     parser.add_argument(
-        '--gamma', type=float, default=0.9, help='a smaller gamma favors earlier win'
+        '--gamma', type=float, default=0.25, help='a smaller gamma favors earlier win'
     )
     parser.add_argument('--num-archers', type=int, default=2)
     parser.add_argument('--num-knights', type=int, default=2)
@@ -49,7 +49,7 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument('--update-per-step', type=float, default=0.25)
     parser.add_argument('--batch-size', type=int, default=32)
     parser.add_argument(
-        '--hidden-sizes', type=int, nargs='*', default=[64, 64]
+        '--hidden-sizes', type=int, nargs='*', default=[128, 128]
     )
     parser.add_argument('--training-num', type=int, default=10)
     parser.add_argument('--test-num', type=int, default=5)
@@ -59,7 +59,7 @@ def get_parser() -> argparse.ArgumentParser:
         '--win-rate',
         type=float,
         default=0.6,
-        help='the expected winning rate: Optimal policy can get 0.7'
+        help='You can do this!!!'
     )
     parser.add_argument(
         '--watch',
@@ -224,7 +224,7 @@ def go_kaz(args=get_args()):
         return
 
     result, agent = train_agent(args)
-    #assert result["best_reward"] >= args.win_rate
+    assert result["best_reward"] >= args.win_rate
 
     if __name__ == "__main__":
         pprint.pprint(result)
